@@ -1,0 +1,31 @@
+//Dado un numero natural formar un nuevo numero con los digitos del numero pero en orden decreciente
+#include <iostream>
+using namespace std;
+int udn (int n){
+	return n%10;
+}
+
+int ordenDec (int n){
+	int p = 9;
+	int nn = 0,np = n;
+	while(p>=0){
+		while (n>0){
+			if (udn(n)==p){
+			nn = (nn*10)+ udn(n);
+			}
+			n= (int)(n/10);
+		}
+		n = np;
+		p--;
+	}
+	return nn;
+}
+
+
+int main(int argc, char *argv[]) {
+		int n,d,nn=0,pp=0;
+		cout << "Ingrese un numero: ";
+		cin >> n;
+	cout << "ordenando = " << ordenDec(n);
+	return 0;
+}

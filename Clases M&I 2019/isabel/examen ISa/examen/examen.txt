@@ -1,0 +1,9 @@
+
+
+
+void obtenerMejorAlumnoMateriaX(){
+    File f4 = new File("inscripcion.dat");     // archivo con datos de la inscripcion
+
+    
+
+}

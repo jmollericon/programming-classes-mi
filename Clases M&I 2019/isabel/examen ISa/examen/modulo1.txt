@@ -1,0 +1,86 @@
+	void obtenerMejorAlumnoMateriaX(){
+	    int sw = -1, idMateria;
+	    do{
+	        idMateria = Integer.parseInt(JOptionPane.showInputDialog("ingrese el id de la materia x: "));
+	        sw = verificarMateria(idMateria);
+	    }while(sw < 0);
+	    int idAlu = idAlu_MaximaNota(idMateria);
+	    mostrarCedulaNombreCompleto(idAlu);
+	}
+	int verificarMateria(int idMateria) {
+	    File f2 = new File("materia.dat");     // archivo con datos de las materias
+	    // flag + idMateria + nomMateria + idCar
+	    //   1  +      4    +     30     +   4   = 39 bytes
+	    int posEnc = -1;
+	    try {
+	        RandomAccessFile raf = new RandomAccessFile(f2, "r");
+	        int pos = 0;
+	        while(pos < raf.length()) {
+	            raf.seek(pos);
+	            boolean flag    = raf.readBoolean();
+	            int idMat       = raf.readInt();
+	            String nomMat   = raf.readUTF();
+	            int idCar       = raf.readInt();
+	            if(idMat == idMateria) { // cunado se encuentra la materia
+	                posEnc = pos;
+	                break;
+	            }
+	            pos = pos + 39;
+	        }
+	    }catch(Exception e) {
+	        JOptionPane.showMessageDialog(null, "error "+e.getMessage());
+	    }
+	    return posEnc;
+	}
+	int idAlu_MaximaNota(int idMateria) {
+	    File f4 = new File("inscripcion.dat");     // archivo con datos de la inscripcion
+	    // gestion + idAlu + idMat + nota
+	    //    6    +    4   +   4  +   4   = 18 bytes
+	    int idAlumno = -1, maximaNota = 0;
+	    try {
+	        RandomAccessFile raf = new RandomAccessFile(f4, "r");
+	        int pos = 0;
+	        while(pos < raf.length()) {
+	            raf.seek(pos);
+	            String gestion  = raf.readUTF();
+	            int idAlu       = raf.readInt();
+	            int idMat       = raf.readInt();
+	            int nota        = raf.readInt();
+	            if((maximaNota < nota) && (idMat == idMateria)) {
+	                maximaNota = nota;
+	                idAlumno = idAlu;
+	            }
+	            pos = pos + 18;
+	        }
+	    }catch(Exception e) {
+	        JOptionPane.showMessageDialog(null, "error "+e.getMessage());
+	    }
+	    return idAlumno;
+	}
+	void mostrarCedulaNombreCompleto(int idAlumno) {
+	    File f3 = new File("alumno.dat");     // archivo con datos de los alumnos
+	    // flag + idAlu + cedula + pat + mat + noms + fechaNac 
+	    //   1  +   4   +   8    + 20  + 20  +  25  +    10      = 68 bytes
+	    int maximaNota = 0;
+	    try {
+	        RandomAccessFile raf = new RandomAccessFile(f3, "r");
+	        int pos = 0;
+	        while(pos < raf.length()) {
+	            raf.seek(pos);
+	            boolean flag    = raf.readBoolean();
+	            int idAlu       = raf.readInt();
+	            long cedula     = raf.readInt();
+	            String pat      = raf.readUTF();
+	            String mat      = raf.readUTF();
+	            String noms     = raf.readUTF();
+	            String fechaNac = raf.readUTF();
+	            if(idAlumno == idAlu) {
+	                JOptionPane.showMessageDialog(null, "El mejor Alumno es:\nCI: "+cedula+"\nNombre: "+pat+" "+mat+" "+noms);
+	                break;
+	            }
+	            pos = pos + 68;
+	        }
+	    }catch(Exception e) {
+	        JOptionPane.showMessageDialog(null, "error "+e.getMessage());
+	    }
+	}

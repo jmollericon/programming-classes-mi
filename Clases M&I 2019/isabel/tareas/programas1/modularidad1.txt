@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+
+
+int leeNatural(){
+	bool flag = true;
+	float nt;
+	while (flag== true){
+		cout << "ingrese numero :";
+		cin>> nt;
+		if (nt>0 && (int)nt == nt){
+			flag = false;
+		}
+	}
+	return (int)nt;
+}
+
+int sde (int x){
+	int s=0, d=1;
+	while (d<x){
+		if (x%d==0){
+			s=s+d;
+		}
+		d++;
+	}
+	return s;
+}
+ 
+bool esPerfecto(int n){
+	 if(sde(n)==n)
+		 return true;
+	 else 
+		 return false;
+ }
+ 
+int main(int argc, char *argv[]) {
+	int n;
+	n=leeNatural();
+	if(esPerfecto (n)== true)
+		cout<< n <<"SI ES PERFECTO";
+	else 
+		cout<< n <<"NO ES PERFECTO";
+	return 0;
+}
+

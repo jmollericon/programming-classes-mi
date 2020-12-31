@@ -1,0 +1,14 @@
+http://eclipse.org/downloads/download.php?file=/windowbuilder/1.9.0/repository.zip
+
+
+WindowBuilder - https://download.eclipse.org/windowbuilder/WB/release/R201506241200-1/4.5/
+
+
+
+
+
+
+codigo  textField_2
+cantidad texField_6
+
+

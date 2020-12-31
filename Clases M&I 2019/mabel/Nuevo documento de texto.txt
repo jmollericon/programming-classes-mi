@@ -1,0 +1,137 @@
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Scanner;
+import javax.swing.*;
+
+public class Random1 {
+
+    static Scanner sc = new Scanner(System.in);
+    static RandomAccessFile fichero = null;
+
+   public static void main(String args[]) throws IOException
+   {
+    for(;;){
+     String [] menu = {"Adicion","Reporte","Modificacion","Salir"};
+           String valor = (String) JOptionPane.showInputDialog(null, "Seleccione la opcion:","Opciones",JOptionPane.DEFAULT_OPTION,null,menu,menu[0]);
+           switch(valor){
+               case "Adicion": agregar();
+                               break;
+                     
+               case "Reporte": mostrarFichero(); 
+                               break;
+               case "Modificacion": modificaFichero(); 
+                                    break;
+               case "Salir": System.exit(0); 
+           }
+   }
+  }
+    
+    public static void agregar() 
+    { 
+      int numero;
+        try {
+            //se abre el fichero para lectura y escritura
+            fichero = new RandomAccessFile("cedulas.dat", "rw");
+            //mostrarFichero(); //muestra el contenido original del fichero
+            System.out.print("Cuantas cedulas desea agregar: ");
+            int n=sc.nextInt();
+            for (int i=1;i<=n;i++){
+            System.out.print("Introduce un n?mero de Cedula para a?adir al final del fichero: ");
+            numero = sc.nextInt(); //se lee el entero a a?adir en el fichero
+            fichero.seek(fichero.length()); //nos situamos al final del fichero
+            fichero.writeInt(numero);            //se escribe el entero
+            }
+            //mostrarFichero();//muestra el contenido del fichero despu?s de a?adir el n?mero
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            try {
+                if (fichero != null) {
+                    fichero.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    public static void mostrarFichero() {
+        int n;
+        try {
+            fichero = new RandomAccessFile("cedulas.dat", "rw");
+            fichero.seek(0); //nos situamos al principio
+            while (true) {
+                n = fichero.readInt();  //se lee  un entero del fichero
+                System.out.println(n);  //se muestra en pantalla
+            }
+        } catch (EOFException e) {
+            System.out.println("Fin de fichero");
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+          
+    }
+    public static void modificaFichero()
+    {
+      Scanner sc = new Scanner(System.in);
+        RandomAccessFile fichero = null;
+        int pos, numero;
+        long size;
+        try {
+            fichero = new RandomAccessFile("cedulas.dat", "rw");
+            //calcular cu?ntos enteros tiene el fichero
+            size = fichero.length();
+            size = size / 4;
+            System.out.println("El fichero tiene " + size + " enteros");
+
+            //Modificar el entero que se encuentra en una posici?n determinada
+            do {
+                System.out.println("Introduce una posici?n (>=1 y <= " + size + "): ");
+                pos = sc.nextInt();
+            } while (pos < 1 || pos > size);
+
+            pos--;  //la posici?n 1 realmente es la 0
+           
+            //nos situamos en la posici?n (byte de inicio) del entero a modificar
+            //en Java un entero ocupa 4 bytes
+            fichero.seek(pos*4);
+
+            //leemos y mostramos el valor actual
+            System.out.println("Valor actual: " + fichero.readInt());
+           
+            //pedimos que se introduzca el nuevo valor
+            System.out.println("Introduce nuevo valor: ");
+            numero = sc.nextInt();
+
+            //nos situamos de nuevo en la posici?n del entero a modificar
+            //esto es necesario porque despu?s de la lectura que hemos realizado para mostrar
+            //el valor el puntero de lectura/escritura ha avanzado al siguiente entero del fichero.
+            //si no hacemos esto escribiremos sobre el siguiente entero
+            fichero.seek(pos*4);
+
+            //escribimos el entero
+            fichero.writeInt(numero);
+     
+   
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }finally {
+            try {
+                if (fichero != null) {
+                    fichero.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    
+    
+}
