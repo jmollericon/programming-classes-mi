@@ -1,0 +1,266 @@
+funciones adicionales
+
+borrar nodo de la cabecera der
+borrar nodo de la cabecera izq
+Borrar el nodo con el dato x
+Agregar uin nodo en la posicion x contando de la cabecera iz
+Agregar un nodo en la posicion y contado desde la cabecera der
+Crear dos pilas, con el recorrido de las diferentes cabecera
+
+
+
+/Ronaldo Rojas - Problema 1
+
+public static doble borrar_cabecera_izquierda(doble cabezera_izquierda)
+
+{   
+
+    if(cabezera_izquierda==null||cabezera_izquierda.sgte==null){
+
+        return null;
+
+    }
+
+    cabezera_izquierda = cabezera_izquierda.sgte;
+
+    cabezera_izquierda.ant = null;
+
+    return cabezera_izquierda;
+
+}
+
+ 
+
+ 
+
+//Ronaldo Rojas - Problema 2
+
+public static doble borrar_cabecera_derecha(doble cabezera_derecha)
+
+{
+
+    if(cabezera_derecha==null||cabezera_derecha.ant==null){
+
+        return null;
+
+    }
+
+    cabezera_derecha = cabezera_derecha.ant;
+
+    cabezera_derecha.sgte = null;
+
+    return cabezera_derecha;
+
+}
+
+ 
+
+ 
+
+//Ronaldo Rojas - Problema 3
+
+public static doble agregar_nodo_desde_la_izquierda(doble cabezera_izquierda, doble nuevo_nodo, int posicion)
+
+{
+
+    doble temporal = cabezera_izquierda;
+
+    int index = 1;
+
+     if(posicion==0){
+
+        nuevo_nodo.sgte=cabezera_izquierda;
+
+        cabezera_izquierda.ant=nuevo_nodo;
+
+        cabezera_izquierda=nuevo_nodo;
+
+        return cabezera_izquierda;
+
+     }
+
+    while(index!=posicion&&temporal!=null){
+
+        temporal = temporal.sgte;
+
+        index ++;
+
+    }
+
+    if(temporal==null||temporal.sgte==null){
+
+        System.out.println("No se puede insertar en esta posicion");
+
+        return cabezera_izquierda;
+
+    }
+
+    nuevo_nodo.sgte = temporal.sgte;
+
+    nuevo_nodo.sgte.ant = nuevo_nodo;
+
+    temporal.sgte = nuevo_nodo;
+
+    nuevo_nodo.ant = temporal;
+
+    return cabezera_izquierda;
+
+}
+
+ 
+
+ 
+
+//Ronaldo Rojas - Problema 3
+
+public static doble agregar_nodo_desde_la_derecha(doble cabezera_derecha, doble nuevo_nodo, int posicion)
+
+{
+
+    doble temporal = cabezera_derecha;
+
+    int index = 1;
+
+    while(index!=posicion&&temporal!=null){
+
+        temporal = temporal.ant;
+
+        index ++;
+
+    }
+
+    if(temporal==null||temporal.ant==null){
+
+        System.out.println("No se puede insertar en esta posicion");
+
+        return cabezera_derecha;
+
+    }
+
+    nuevo_nodo.ant = temporal.ant;
+
+    nuevo_nodo.ant.sgte = nuevo_nodo;
+
+    temporal.ant = nuevo_nodo;
+
+    nuevo_nodo.sgte = temporal;
+
+    return cabezera_derecha;
+
+}
+
+ 
+
+ 
+
+//Ronaldo Rojas - Problema 4
+
+public static doble borrar_nodos_con_dato_desde_la_izquierda(doble cabezera_izquierda, int dato)
+
+{
+
+    doble temporal = cabezera_izquierda;
+
+    doble anterior = null;
+
+     if(posicion==0){
+
+        nuevo_nodo.ant=cabezera_derecha;
+
+        cabezera_derecha.sgte=nuevo_nodo;
+
+        cabezera_derecha=nuevo_nodo;
+
+        return cabezera_derecha;
+
+     }
+
+       while (temporal != null && temporal.dato == dato){
+
+           cabezera_izquierda = temporal.sgte;
+
+           if(cabezera_izquierda!=null){
+
+            cabezera_izquierda.ant = null;
+
+           }
+
+           temporal = cabezera_izquierda;
+
+       }
+
+ 
+
+        while (temporal != null && temporal.sgte != null){
+
+            anterior = temporal;
+
+            temporal = temporal.sgte;
+
+            if(temporal.dato == dato && temporal.sgte != null){
+
+                anterior.sgte = temporal.sgte;
+
+                temporal = anterior.sgte;
+
+                temporal.ant = anterior;
+
+            }
+
+        }
+
+    return cabezera_izquierda;
+
+}
+
+ 
+
+ 
+
+//Ronaldo Rojas - Problema 5
+
+public static doble borrar_nodos_con_dato_desde_la_derecha(doble cabezera_derecha, int dato)
+
+{
+
+    doble temporal = cabezera_derecha;
+
+    doble siguiente = null;
+
+       while (temporal != null && temporal.dato == dato){
+
+            cabezera_derecha = temporal.ant;
+
+            if(cabezera_derecha!=null){
+
+            cabezera_derecha.sgte = null;
+
+            }
+
+           temporal = cabezera_derecha;
+
+       }
+
+ 
+
+        while (temporal != null && temporal.ant != null){
+
+            siguiente = temporal;
+
+            temporal = temporal.ant;
+
+            if(temporal.dato == dato && temporal.ant != null){
+
+                siguiente.ant = temporal.ant;
+
+                temporal = siguiente.ant;
+
+                temporal.sgte = siguiente;
+
+            }
+
+        }
+
+    return cabezera_derecha;
+
+}

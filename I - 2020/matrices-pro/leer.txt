@@ -1,0 +1,15 @@
+
+En esta ruta se encuentra una carpeta 'matrices2' (donde estan las clases que debes copiar), 
+primero debes crear un proyecto en java (con el nombre que deseas), y dentro de este crear 
+un package con el nombre de 'matrices2' (nuevo -> package), y copiar las clases que mencioné 
+dentro del packege creado.
+
+Para ejecutar los programas, clic derecho sobre el probrama que deseas ejecutar y buscar la
+opcion 'run' y listo!
+
+las clases son:
+    - MatricesMultiplicacion.java  -> corresponde a la multiplicación de dos matrices.
+    - MatrizInversaFadeva.java	   -> corresponde a obtener la inversa de una matriz por el
+				      metodo de fadeva.
+Adjunté dos documentos pdf que indican como se calcula la inversa de una matriz por el metodo
+de fadeva.
